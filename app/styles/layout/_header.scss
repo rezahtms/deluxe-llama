@@ -1,0 +1,91 @@
+@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.layout-header-primary {
+  display: flex;
+  align-items: center;
+
+  &__title-form {
+    width: 100%;
+  }
+
+  &__title {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__title-trigger {
+    width: 100%;
+    margin: 0;
+    padding: $spacing-2;
+    border: 0;
+    border-radius: $radius-md;
+    background: transparent;
+    color: $color-card;
+    text-align: left;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.55);
+      outline-offset: 2px;
+    }
+  }
+
+  &__title-input {
+    width: min(100%, 32rem);
+    margin: 0;
+    padding: 0.65rem 0.8rem;
+    border: 0;
+    border-radius: $radius-md;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: $color-card;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition:
+      background-color 0.15s ease-in,
+      color 0.15s ease-in;
+
+    &:focus,
+    &:focus-visible,
+    &--active {
+      background-color: $color-card;
+      color: $color-text-strong;
+      outline: 2px solid rgba(255, 255, 255, 0.55);
+      outline-offset: 1px;
+    }
+  }
+}
+
+@include media-down($bp-sm) {
+  .layout-header-primary {
+    &__title {
+      max-width: calc(100vw - 3.5rem);
+      font-size: $font-size-lg;
+    }
+
+    &__title-trigger {
+      max-width: calc(100vw - 3.5rem);
+      font-size: $font-size-lg;
+    }
+
+    &__title-input {
+      width: min(100%, calc(100vw - 3.5rem));
+      font-size: $font-size-lg;
+    }
+  }
+}

@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
+import { buildCanonicalUrl } from "./libs/seo/site-config";
 
-export default function robots(): MetadataRoute.Robots {
-
-  return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: buildCanonicalUrl("/"),
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 1,
     },
-    sitemap: `${process.env.NEXT_PUBLIC_BASE_URL}/sitemap.xml`,
-  };
+  ];
 }

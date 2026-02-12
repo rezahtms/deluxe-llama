@@ -1,0 +1,61 @@
+.layout-header-primary {
+  display: flex;
+  align-items: center;
+
+  &__title-form {
+    width: 100%;
+  }
+
+  &__title {
+    max-width: calc(100vw - 9rem);
+    margin: 0;
+    padding: 0.5rem;
+
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &--editable {
+      border-radius: 0.3rem;
+      cursor: text;
+      transition: background-color 0.2s ease-in;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+
+      &:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.55);
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  &__title-input {
+    width: min(100%, calc(100vw - 9rem));
+    margin: 0;
+    padding: 0.65rem 0.8rem;
+    border: 0;
+    border-radius: 0.3rem;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition:
+      background-color 0.15s ease-in,
+      color 0.15s ease-in;
+
+    &:focus,
+    &:focus-visible {
+      background-color: #fff !important;
+      color: #172b4d !important;
+      outline: 2px solid rgba(255, 255, 255, 0.55);
+      outline-offset: 1px;
+    }
+  }
+}

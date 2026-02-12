@@ -1,0 +1,519 @@
+@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.dnd-board {
+  margin-top: $spacing-4;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-4;
+  min-height: calc(100dvh - 7rem);
+  padding-bottom: $spacing-2;
+}
+
+.board {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: $spacing-4;
+}
+
+.board__create_column {
+  flex: 0 0 20rem;
+  width: 20rem;
+  max-width: 20rem;
+}
+
+.board__add-btn {
+  width: 100%;
+  min-height: 3rem;
+  margin-right: $spacing-3;
+  padding: 0.75rem $spacing-3;
+  font-size: $font-size-base;
+  color: $color-card;
+  text-align: left;
+  text-wrap: nowrap;
+  border: 0;
+  border-radius: $radius-sm;
+  background-color: rgba(0, 0, 0, 0.12);
+  transition: background-color 0.2s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.board__create-form {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem;
+}
+
+.board__create-form .form-input__actions {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.board__create-form .form-input__submit,
+.board__create-form .form-input__close {
+  width: fit-content;
+  min-height: 2.5rem;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board__create-form .form-input__close {
+  background-color: rgba(9, 30, 66, 0.08);
+}
+
+.dnd-board__column-shell {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dnd-board__task-shell {
+  position: relative;
+}
+
+.dnd-board__task-shell--draggable {
+  cursor: grab;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.column {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  width: $board-column-width;
+  border-radius: $radius-sm;
+  background-color: $color-surface;
+  color: $color-text-primary;
+  transition: box-shadow 0.2s ease;
+
+  &--dragging {
+    box-shadow:
+      0 0 0 2px $color-focus,
+      0 16px 28px rgba(9, 30, 66, 0.2);
+  }
+
+  &__body {
+    padding: 0 $spacing-2;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__header--draggable {
+    cursor: grab;
+    user-select: none;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__title {
+    width: 100%;
+    padding: 0.375rem $spacing-2;
+    font-size: $font-size-base;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__actions-button {
+    border: 0;
+    background: transparent;
+    color: $color-text-muted;
+    border-radius: $radius-sm;
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+
+    &:hover {
+      color: $color-text-strong;
+      background-color: rgba(9, 30, 66, 0.08);
+    }
+  }
+}
+
+.column-actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.column-actions__panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 15rem;
+  overflow: hidden;
+  border: 1px solid rgba(9, 30, 66, 0.12);
+  border-radius: $radius-md;
+  background: $color-card;
+  box-shadow: 0 12px 30px rgba(9, 30, 66, 0.22);
+  transform-origin: top left;
+  z-index: 14000;
+}
+
+.column-actions__header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-2 $spacing-3;
+  border-bottom: 1px solid rgba(9, 30, 66, 0.1);
+}
+
+.column-actions__title {
+  width: 100%;
+  text-align: center;
+  color: $color-text-strong;
+  font-size: $font-size-sm;
+  font-weight: 600;
+}
+
+.column-actions__close {
+  position: absolute;
+  top: 50%;
+  right: $spacing-2;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border: 0;
+  padding: 0;
+  border-radius: $radius-sm;
+  background: transparent;
+  cursor: pointer;
+}
+
+.column-actions__list {
+  list-style: none;
+  margin: 0;
+  padding: $spacing-1;
+}
+
+.column-actions__item + .column-actions__item {
+  margin-top: $spacing-1;
+}
+
+.column-actions__action {
+  display: block;
+  width: 100%;
+  padding: $spacing-2 $spacing-3;
+  border: 0;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $color-text-strong;
+  text-align: left;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(46, 126, 175);
+  }
+}
+
+.column-actions__action--danger {
+  color: #c62828;
+
+  &:hover {
+    color: rgb(255, 255, 255);
+    background-color: rgb(46, 126, 175);
+  }
+}
+
+.task-list {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: $spacing-2;
+  min-height: 2rem;
+  padding: $spacing-2;
+  border-radius: $radius-sm;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: background-color 0.2s ease;
+  scrollbar-width: thin;
+  overscroll-behavior-x: none;
+
+  &--drop-target {
+    background: rgba(12, 102, 228, 0.12);
+  }
+}
+
+.task-card {
+  padding: $spacing-2;
+  border-radius: $radius-sm;
+  background: $color-card;
+  box-shadow: $shadow-card;
+  transition: background-color 0.2s ease-in;
+
+  &__title {
+    margin-bottom: $spacing-2;
+    color: $color-text-primary;
+    font-size: $font-size-sm;
+    word-break: break-word;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__comments-button {
+    appearance: none;
+    padding: 0.3rem 0.6rem;
+    border: 0;
+    border-radius: $radius-sm;
+    background-color: $color-surface;
+    color: $color-text-strong;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in;
+
+    &:hover {
+      background-color: #ccd1d9;
+    }
+  }
+}
+
+.task-comments-modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-comments-modal__panel {
+  width: min(28rem, 100%);
+}
+
+.task-comments-modal__header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: $spacing-3;
+  border-bottom: 1px solid rgba(9, 30, 66, 0.12);
+}
+
+.task-comments-modal__close {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 0;
+  padding: 0;
+  border-radius: $radius-sm;
+  background: transparent;
+  cursor: pointer;
+}
+
+.task-comments-modal__title {
+  margin: 0;
+  font-size: 1rem;
+  color: rgb(23, 43, 77);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.task-comments-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+  padding: $spacing-3;
+}
+
+.task-comments-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+  list-style: none;
+  max-height: 14.5rem;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+}
+
+.task-comments-modal__item {
+  padding: $spacing-2;
+  border-radius: $radius-sm;
+  background-color: rgb(244, 245, 247);
+}
+
+.task-comments-modal__empty {
+  list-style: none;
+  padding: 0.5rem;
+  background-color: rgb(244, 245, 247);
+  border-radius: 0.2rem;
+  color: $color-text-primary;
+}
+
+.task-comments-modal__meta {
+  margin-bottom: 0.3rem;
+  font-size: 0.7rem;
+  color: rgb(94, 108, 132);
+}
+
+.task-comments-modal__text {
+  color: $color-text-primary;
+  font-size: $font-size-sm;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.task-comments-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+}
+
+.task-comments-modal__submit {
+  appearance: none;
+  align-self: flex-end;
+  padding: 0.45rem 0.9rem;
+  border: 0;
+  border-radius: 0.2rem;
+  background-color: rgb(90, 172, 68);
+  color: rgb(255, 255, 255);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in;
+
+  &:hover {
+    background-color: #4fa13c;
+  }
+}
+
+.create-task-form {
+  position: relative;
+  width: 100%;
+  margin-top: $spacing-4;
+
+  &__form {
+    max-height: 18.75rem;
+    padding: 0 $spacing-2;
+    overflow: auto;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    margin: $spacing-2 0;
+  }
+
+  &__submit {
+    margin-right: $spacing-2;
+    padding: $spacing-2 $spacing-3;
+    border: 0;
+    border-radius: $radius-sm;
+    background-color: $color-success;
+    box-shadow: 0 1px 0 0 $color-success-shadow;
+    color: $color-card;
+    font-size: $font-size-sm;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #4fa13c;
+    }
+  }
+
+  &__close {
+    width: 1rem;
+    height: 1rem;
+    border: 0;
+    background: transparent;
+    color: $color-text-muted;
+    cursor: pointer;
+  }
+
+  &__trigger {
+    width: 100%;
+    padding: $spacing-2 $spacing-3;
+    border: 0;
+    border-radius: $radius-sm;
+    background: transparent;
+    color: $color-text-muted;
+    text-align: left;
+    font-size: $font-size-sm;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+
+    &:hover {
+      color: $color-text-strong;
+      background: $color-surface-hover;
+    }
+  }
+}
+
+@include media-down($bp-md) {
+  .dnd-board {
+    gap: $spacing-3;
+  }
+
+  .board {
+    gap: $spacing-3;
+  }
+
+  .column {
+    width: $board-column-width-mobile;
+  }
+}
+
+@include media-down($bp-sm) {
+  .dnd-board {
+    min-height: calc(100dvh - 6rem);
+    gap: $spacing-2;
+  }
+
+  .board {
+    gap: $spacing-2;
+  }
+
+  .board__create_column {
+    flex-basis: 16rem;
+    width: 16rem;
+    max-width: 16rem;
+  }
+
+  .create-task-form__form {
+    padding: 0 $spacing-1;
+  }
+
+  .column-actions__panel {
+    width: 13.5rem;
+  }
+
+  .task-comments-modal__title {
+    white-space: normal;
+  }
+
+  .task-comments-modal__body {
+    padding: $spacing-2;
+  }
+}

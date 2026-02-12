@@ -1,0 +1,15 @@
+@use "./variables";
+
+.trigger {
+  margin-top: variables.$spacing-md;
+}
+
+.form {
+  margin-top: variables.$spacing-md;
+  display: flex;
+  gap: variables.$spacing-sm;
+
+  input {
+    flex: 1;
+  }
+}

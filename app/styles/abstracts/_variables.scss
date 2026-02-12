@@ -1,0 +1,36 @@
+$color-page: #2e7eaf;
+$color-page-fallback: #2e7eaf;
+$color-text-on-page: #f5f7ff;
+$color-text-primary: #40424b;
+$color-text-muted: #6b778c;
+$color-text-strong: #172b4d;
+$color-surface: #dfe1e6;
+$color-surface-hover: rgba(9, 30, 66, 0.13);
+$color-card: #ffffff;
+$color-border: rgba(9, 30, 66, 0.2);
+$color-focus: #0c66e4;
+$color-success: #5aac44;
+$color-success-shadow: #3f6f21;
+$color-error: #ef4444;
+
+$shadow-card: rgba(9, 30, 66, 0.25) 0 1px 0;
+$shadow-focus: 0 0 0 2px $color-focus;
+
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
+$spacing-3: 0.75rem;
+$spacing-4: 1rem;
+$spacing-5: 1.25rem;
+
+$radius-sm: 0.2rem;
+$radius-md: 0.3rem;
+
+$board-column-width: 16rem;
+$board-column-width-mobile: 14rem;
+
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+
+$bp-md: 960px;
+$bp-sm: 640px;
